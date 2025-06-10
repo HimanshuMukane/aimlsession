@@ -6,16 +6,26 @@ from nltk.stem import PorterStemmer, WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk import pos_tag, ne_chunk
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from gensim.models import Word2Vec
-# If the spaCy English model isn't installed, download it programmatically
+# from gensim.models import Word2Vec
+
+# Ensure required downloads
+# nltk.download('punkt')
+# nltk.download('wordnet')
+# nltk.download('averaged_perceptron_tagger')
+# nltk.download('maxent_ne_chunker')
+# nltk.download('words')
+# nltk.download('stopwords')
+# nltk.download('punkt_tab')
+# nltk.download('averaged_perceptron_tagger_eng')
+# nltk.download('maxent_ne_chunker_tab')
+# Load spaCy model
 try:
     nlp = spacy.load('en_core_web_sm')
 except OSError:
     spacy.cli.download('en_core_web_sm')
     nlp = spacy.load('en_core_web_sm')
 
-# Sample text
-doc = """Apple is looking at buying U.K. startup for $1 billion. Natural Language Processing with NLTK and spaCy is fun."""
+doc = """Apple is looking at buying U.K. startup for $1 billion. Natural Language Processing with NLTK and spaCy is fun. Nltk is better than spaCy for some tasks, but spaCy is faster and more efficient for others."""
 
 # 1. Tokenization (NLTK)
 tokens = word_tokenize(doc)
@@ -37,7 +47,8 @@ print("POS Tags:", pos_tags)
 
 # 5. Named Entity Recognition (NLTK)
 ne_tree = ne_chunk(pos_tags)
-print("NE Tree:", ne_tree)
+print("NE Tree:")
+print(ne_tree)
 
 # 6. Stop Words Removal (NLTK)
 stop_words = set(stopwords.words('english'))
@@ -48,7 +59,8 @@ print("Filtered Tokens:", filtered)
 grammar = "NP: {<DT>?<JJ>*<NN>}"
 cp = nltk.RegexpParser(grammar)
 chunked = cp.parse(pos_tags)
-print("Chunks:", chunked)
+print("Chunks:")
+print(chunked)
 
 # 8. Dependency Parsing (spaCy)
 print("Dependencies:")
@@ -68,6 +80,6 @@ print("TF-IDF Shape:", tfidf_matrix.shape)
 print("TF-IDF Features:", tfidf.get_feature_names_out())
 
 # 11. Text Vectorization: Word2Vec (gensim)
-tokens_for_w2v = [word_tokenize(sent) for sent in sent_tokenize(doc)]
-w2v_model = Word2Vec(tokens_for_w2v, vector_size=100, window=5, min_count=1, workers=2)
-print("Vector for 'Apple':", w2v_model.wv['Apple'])
+# tokens_for_w2v = [word_tokenize(sent) for sent in sent_tokenize(doc)]
+# w2v_model = Word2Vec(tokens_for_w2v, vector_size=100, window=5, min_count=1, workers=2)
+# print("Vector for 'Apple':", w2v_model.wv['Apple'])
